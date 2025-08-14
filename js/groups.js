@@ -5,14 +5,26 @@ var groups = (function () {
             var members = result;
             const membersListEl = document.querySelector("#group_members");
 
-            const makeMembersItems = members.map((member) => {
+            for (var i = 0; i < members.length; i++) {
+                member = members[i];
                 const memberItemEl = document.createElement("li");
                 memberItemEl.classList.add("member");
+                memberItemEl.dataset.id = member.id;
+                membersListEl.appendChild(memberItemEl);
 
                 const memberNameEl = document.createElement("span");
                 memberNameEl.textContent = member.name;
+                memberNameEl.dataset.id = member.id;
                 memberItemEl.append(memberNameEl);
-
+                memberNameEl.onclick = function () {
+                    //alert(this.dataset.id);
+                    alert(this.parentElement.dataset.id);
+                    
+                }
+                memberNameEl.style.cursor = 'pointer';
+                const memberCountEl = document.createElement("span");
+                memberCountEl.textContent = "members: " + member.users.length;
+                memberItemEl.append(memberCountEl);
                 const deleteMemberBtnEl = document.createElement("button");
                 deleteMemberBtnEl.classList.add("delete-btn");
 
@@ -35,8 +47,8 @@ var groups = (function () {
                 memberItemEl.append(deleteMemberBtnEl);
 
                 // return memberItemEl;
-            });
-            membersListEl.append(...makeMembersItems);
+            }
+
         });
 
     }
