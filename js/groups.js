@@ -1,28 +1,3 @@
-const mockGroups = [
-  {
-    id: 1,
-    name: 'Developers',
-    users: [
-      { id: 101, name: 'Max' },
-      { id: 102, name: 'WasWas' },
-      { id: 103, name: 'Andrew' },
-    ],
-  },
-  {
-    id: 2,
-    name: 'Designers',
-    users: [
-      { id: 201, name: 'Hanna' },
-      { id: 202, name: 'Maryna' },
-    ],
-  },
-  {
-    id: 3,
-    name: 'Testers',
-    users: [{ id: 301, name: 'Oleksandra' }],
-  },
-];
-
 const groups = (function () {
   function get_groups() {
     srv.exec('GetGroups', 'get', null, result => {
