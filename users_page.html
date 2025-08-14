@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <title>Users</title>
+  </head>
+
+  <body>
+    <a href="index.html" class="back_btn">
+      <svg width="24" height="24">
+        <use href="./sprite/sprite.svg#icon-arrow_back"></use>
+      </svg>
+    </a>
+
+    <!-- <div class="overlay">
+    <div class="content">
+      <button class="close-button">
+        <svg class="close-icon" width="16" height="16">
+          <use href="./sprite/sprite.svg#icon-add"></use>
+        </svg>
+      </button>
+      <h1 class="title">Groups</h1>
+
+      <div class="option-btn-wrapper">
+        <button class="add-button">
+          <svg class="close-icon" width="16" height="16">
+            <use href="./sprite/sprite.svg#icon-add"></use>
+          </svg>
+        </button>
+        <p>Add member</p>
+      </div>
+      <ul id="group_members"></ul>
+    </div>
+  </div> -->
+    <script src="js/create_members_list.js" type="module"></script>
+
+    <script src="js/srv.js"></script>
+    <script src="js/groups.js"></script>
+
+    <script>
+      groups.get_groups();
+    </script>
+  </body>
+</html>

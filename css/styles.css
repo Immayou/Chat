@@ -1,3 +1,7 @@
+@font-face {
+  font-family: SF-Pro;
+  src: url('../fonts/SF_Pro_Text_Regular.otf') format('opentype');
+}
 body,
 html {
   margin: 0;
@@ -12,6 +16,13 @@ button {
   outline: none;
   border: none;
   background-color: transparent;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 li,
@@ -21,6 +32,63 @@ h1 {
   padding: 0;
   margin: 0;
   list-style: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'SF-Pro', BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  color: #212121;
+  line-height: 1.5;
+  background: linear-gradient(white, 70%, rgb(13, 13, 13));
+  text-align: center;
+  height: 100vh;
+  padding-top: 50px;
+  padding-bottom: auto;
+}
+
+.add_group_btn {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 5%;
+  right: 10%;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  transition: opacity 250ms cubic-bezier(0.075, 0.82, 0.165, 1);
+  span {
+    font-size: 16px;
+    margin-right: 10px;
+  }
+}
+
+.add_group_btn:hover {
+  opacity: 0.7;
+}
+
+.navigation_link {
+  display: inline-block;
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+  a {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+  }
+}
+
+.back_btn {
+  position: absolute;
+  top: 5%;
+  left: 5%;
 }
 
 .title {
@@ -88,4 +156,57 @@ h1 {
   &:not(:last-child) {
     margin-bottom: 10px;
   }
+}
+
+#users_in_group {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 4px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.group-header,
+.group-row {
+  display: grid;
+  grid-template-columns: 50px 1fr 100px 40px;
+  background-color: #f5f5f5;
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.group-header {
+  font-weight: bold;
+  background: #f5f5f5;
+  border-bottom: 1px solid #eee;
+}
+
+.header-cell {
+  &:nth-child(2) {
+    text-align: left;
+  }
+}
+
+.btn_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.group-name {
+  text-align: left;
+}
+
+.delete-btn {
+  transition: opacity 250ms cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.delete-btn:hover {
+  opacity: 0.7;
 }
