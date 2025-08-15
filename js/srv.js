@@ -1,5 +1,5 @@
 var srv = (function () {
-    var apiMainUrl = "https://4d22529ccdb8.ngrok-free.app/api/Group/";
+    var apiMainUrl = "https://a92de819c6a2.ngrok-free.app/api/Group/";
 
     function get_server_url() {
         return apiMainUrl;

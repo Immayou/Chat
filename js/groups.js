@@ -1,120 +1,79 @@
-const groups = (function () {
-  function get_groups() {
-    srv.exec('GetGroups', 'get', null, result => {
-      const members = result;
-      const containerEl = document.querySelector('#users_in_group');
+var groups = (function () {
 
-      if (!containerEl) return;
+    function get_groups() {
+        srv.exec("GetGroups", "get", null, result => {
+            var members = result;
+            const membersListEl = document.querySelector("#group_members");
 
-      containerEl.innerHTML = '';
+            for (var i = 0; i < members.length; i++) {
+                member = members[i];
+                const memberItemEl = document.createElement("li");
+                memberItemEl.classList.add("member");
+                memberItemEl.dataset.id = member.id;
+                membersListEl.appendChild(memberItemEl);
 
-      const headerEl = document.createElement('div');
-      headerEl.classList.add('group-header');
-      headerEl.innerHTML = `
-        <div class="header-cell">#</div>
-        <div class="header-cell">Group name</div>
-        <div class="header-cell">Members</div>
-      `;
-      containerEl.appendChild(headerEl);
+                const memberNameEl = document.createElement("span");
+                memberNameEl.textContent = member.name;
+                memberNameEl.dataset.id = member.id;
+                memberItemEl.append(memberNameEl);
+                memberNameEl.style.cursor = 'pointer';
 
-      for (let i = 0; i < members.length; i++) {
-        const member = members[i];
-        const rowEl = document.createElement('div');
-        rowEl.classList.add('group-row');
-        rowEl.dataset.id = member.id;
+                const memberCountEl = document.createElement("span");
+                memberCountEl.textContent = "members: " + member.users.length;
+                memberItemEl.append(memberCountEl);
+                const deleteMemberBtnEl = document.createElement("button");
+                deleteMemberBtnEl.classList.add("delete-btn");
 
-        rowEl.innerHTML = `
-          <div class="cell">${i + 1}</div>
-          <div class="cell group-name" data-id="${member.id}">${
-          member.name
-        }</div>
-          <div class="cell">${member.users.length}</div>
-          <div class="btn_wrapper">
-          <button class="edit-btn">
-            <svg width="19" height="19" class="edit-icon">
-              <use href="./sprite/sprite.svg#icon-edit"></use>
-            </svg>
-          </button>
-          <button class="delete-btn">
-            <svg width="16" height="16" class="close-icon">
-              <use href="./sprite/sprite.svg#icon-delete"></use>
-            </svg>
-          </button>
-          </div>
-        `;
+                const closeIconEl = document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "svg"
+                );
+                closeIconEl.setAttribute("width", "16");
+                closeIconEl.setAttribute("height", "16");
+                closeIconEl.classList.add("close-icon");
 
-        containerEl.appendChild(rowEl);
+                const closeIconUseEl = document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "use"
+                );
+                closeIconUseEl.setAttribute("href", "./sprite/sprite.svg#icon-delete");
 
-        rowEl.querySelector('.group-name').onclick = function () {
-          alert(this.dataset.id);
-        };
-      }
-    });
-  }
+                closeIconEl.append(closeIconUseEl);
+                deleteMemberBtnEl.append(closeIconEl);
+                memberItemEl.append(deleteMemberBtnEl);
 
-  return {
-    get_groups,
-  };
-})();
+                // return memberItemEl;
+            }
 
-// var groups = (function () {
+        });
 
-//     function get_groups() {
-//         srv.exec("GetGroups", "get", null, result => {
-//             var members = result;
-//             const membersListEl = document.querySelector("#group_members");
+    }
+    function show_group() {
 
-//             for (var i = 0; i < members.length; i++) {
-//                 member = members[i];
-//                 const memberItemEl = document.createElement("li");
-//                 memberItemEl.classList.add("member");
-//                 memberItemEl.dataset.id = member.id;
-//                 membersListEl.appendChild(memberItemEl);
+    }
+    function get_users() {
+        srv.exec("GetUsers", "get", null, result => {
+           // console.log(result);
+            var container = document.getElementById("div-users");
+            for(var i = 0;i < result.length;i++){
+                var user = result[i];
+                var div = document.createElement("div");
+                div.innerHTML = user.displayName;
+                div.dataset.id = user.userId;
+                div.style.cursor = "pointer";
+                div.style.textAlign = 'left';
+                div.style.marginLeft = '40px';
+                div.onclick = function(){
+                    alert(this.dataset.id);
+                }
 
-//                 const memberNameEl = document.createElement("span");
-//                 memberNameEl.textContent = member.name;
-//                 memberNameEl.dataset.id = member.id;
-//                 memberItemEl.append(memberNameEl);
-//                 memberNameEl.onclick = function () {
-//                     //alert(this.dataset.id);
-//                     alert(this.parentElement.dataset.id);
 
-//                 }
-//                 memberNameEl.style.cursor = 'pointer';
-//                 const memberCountEl = document.createElement("span");
-//                 memberCountEl.textContent = "members: " + member.users.length;
-//                 memberItemEl.append(memberCountEl);
-//                 const deleteMemberBtnEl = document.createElement("button");
-//                 deleteMemberBtnEl.classList.add("delete-btn");
-
-//                 const closeIconEl = document.createElementNS(
-//                     "http://www.w3.org/2000/svg",
-//                     "svg"
-//                 );
-//                 closeIconEl.setAttribute("width", "16");
-//                 closeIconEl.setAttribute("height", "16");
-//                 closeIconEl.classList.add("close-icon");
-
-//                 const closeIconUseEl = document.createElementNS(
-//                     "http://www.w3.org/2000/svg",
-//                     "use"
-//                 );
-//                 closeIconUseEl.setAttribute("href", "./sprite/sprite.svg#icon-delete");
-
-//                 closeIconEl.append(closeIconUseEl);
-//                 deleteMemberBtnEl.append(closeIconEl);
-//                 memberItemEl.append(deleteMemberBtnEl);
-
-//                 // return memberItemEl;
-//             }
-
-//         });
-
-//     }
-//     function show_group() {
-
-//     }
-//     return {
-//         get_groups: get_groups
-//     };
-// })(window);
+                container.appendChild(div);
+            }
+        });
+    }
+    return {
+        get_groups: get_groups,
+        get_users:get_users
+    };
+})(window);
