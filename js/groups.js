@@ -21,6 +21,7 @@ var groups = (function () {
                 const memberCountEl = document.createElement("span");
                 memberCountEl.textContent = "members: " + member.users.length;
                 memberItemEl.append(memberCountEl);
+
                 const deleteMemberBtnEl = document.createElement("button");
                 deleteMemberBtnEl.classList.add("delete-btn");
 
@@ -51,29 +52,55 @@ var groups = (function () {
     function show_group() {
 
     }
+    function append_delete_button(div) {
+        const deleteMemberBtnEl = document.createElement("button");
+
+        const closeIconEl = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "svg"
+        );
+        closeIconEl.setAttribute("width", "26");
+        closeIconEl.setAttribute("height", "26");
+        closeIconEl.classList.add("close-icon");
+
+        const closeIconUseEl = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "use"
+        );
+        closeIconUseEl.setAttribute("href", "./sprite/sprite.svg#icon-delete");
+
+        closeIconEl.append(closeIconUseEl);
+        deleteMemberBtnEl.append(closeIconEl);
+
+        div.appendChild(deleteMemberBtnEl);
+        return deleteMemberBtnEl;
+    }
     function get_users() {
         srv.exec("GetUsers", "get", null, result => {
-           // console.log(result);
+            // console.log(result);
             var container = document.getElementById("div-users");
-            for(var i = 0;i < result.length;i++){
+            for (var i = 0; i < result.length; i++) {
                 var user = result[i];
                 var div = document.createElement("div");
                 div.innerHTML = user.displayName;
                 div.dataset.id = user.userId;
                 div.style.cursor = "pointer";
                 div.style.textAlign = 'left';
-                div.style.marginLeft = '40px';
-                div.onclick = function(){
-                    alert(this.dataset.id);
+
+                div.style.marginLeft = '140px';
+                div.onclick = function () {
+                    alert('Edit user : ' + this.dataset.id);
                 }
-
-
+                var btn = append_delete_button(div);
+                btn.onclick = function () {
+                    alert('Delete user : ' + this.parentElement.dataset.id);
+                }
                 container.appendChild(div);
             }
         });
     }
     return {
         get_groups: get_groups,
-        get_users:get_users
+        get_users: get_users
     };
 })(window);
